@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { ProductService } from './products/product.service';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
 import { ProductsComponent } from './products/products.component';
@@ -30,7 +32,7 @@ import { DropdownDirective } from './dropdown.directive';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
