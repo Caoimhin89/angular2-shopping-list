@@ -11,6 +11,7 @@ import { ProductItemComponent } from './products/product-list/product-item.compo
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.component';
+import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.comp
     ProductItemComponent,
     ProductDetailComponent,
     ShoppingListComponent,
-    ShoppingListAddComponent
+    ShoppingListAddComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
