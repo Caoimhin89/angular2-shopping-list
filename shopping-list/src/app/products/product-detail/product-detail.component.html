@@ -22,8 +22,8 @@
 <div class="row" *ngIf="selectedProduct != undefined">
   <div class="col-xs-12">
     <h3>Included with this Order:</h3>
-    <ul>
-      <li *ngFor="let item of selectedProduct?.inclusions">{{item.name}} x{{item.quantity}}</li>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of selectedProduct?.inclusions">{{item.name}} x{{item.quantity}}</li>
     </ul>
   </div>
 </div>
