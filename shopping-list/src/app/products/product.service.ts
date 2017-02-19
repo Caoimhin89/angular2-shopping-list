@@ -32,4 +32,8 @@ export class ProductService {
   getProductById(id: number) {
     return this.products[id];
   }
+
+  deleteProduct(product: Product) {
+    this.products.splice(this.products.indexOf(product), 1);
+  }
 }

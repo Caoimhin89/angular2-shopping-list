@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Product } from '../product';
@@ -17,6 +17,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   selectedProduct: Product;
 
   constructor(private shoppingCartService: ShoppingCartService,
+              private router: Router,
               private route: ActivatedRoute,
               private productService: ProductService) { }
 
@@ -35,6 +36,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   onAddToCart() {
     this.shoppingCartService.addItems(this.selectedProduct);
+  }
+
+  onEdit() {
+    this.router.navigate(['/products', this.productIndex, 'edit']);
+  }
+
+  onDelete() {
+    this.productService.deleteProduct(this.selectedProduct);
+    this.router.navigate(['/products']);
   }
 
 }
