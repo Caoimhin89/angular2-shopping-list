@@ -5,7 +5,8 @@ import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
 
 import { ProductService } from './products/product.service';
-import { ShoppingCartService } from './shopping-list/shopping-cart.service';
+import { ShoppingCartService } from './shopping-cart/shopping-cart.service';
+import { ShoppingListService } from './shopping-list/shopping-list.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
@@ -18,6 +19,7 @@ import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.comp
 import { DropdownDirective } from './dropdown.directive';
 import { ProductEditComponent } from './products/product-edit/product-edit.component';
 import { ProductStartComponent } from './products/product-start.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { ProductStartComponent } from './products/product-start.component';
     ShoppingListAddComponent,
     DropdownDirective,
     ProductEditComponent,
-    ProductStartComponent
+    ProductStartComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import { ProductStartComponent } from './products/product-start.component';
     HttpModule,
     routing
   ],
-  providers: [ProductService, ShoppingCartService],
+  providers: [ProductService, ShoppingCartService, ShoppingListService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

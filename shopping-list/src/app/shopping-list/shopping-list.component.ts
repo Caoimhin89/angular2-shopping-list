@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../products/product';
-import { ShoppingCartService } from './shopping-cart.service';
+import { ShoppingListService } from './shopping-list.service';
 
 @Component({
   selector: 'app-shopping-list',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+  templateUrl: 'shopping-list.component.html',
+  styleUrls: ['shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-  items: Map<Product, number> = null;
+  items: Map<string, number> = null;
 
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit() {
-    this.items = this.shoppingCartService.getItems();
+    this.items = this.shoppingListService.getItems();
   }
 
 }
