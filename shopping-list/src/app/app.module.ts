@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { routing } from './app.routing';
 
 import { ProductService } from './products/product.service';
 import { ShoppingCartService } from './shopping-list/shopping-cart.service';
@@ -15,6 +16,8 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingListAddComponent } from './shopping-list/shopping-list-add.component';
 import { DropdownDirective } from './dropdown.directive';
+import { ProductEditComponent } from './products/product-edit/product-edit.component';
+import { ProductStartComponent } from './products/product-start.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +29,15 @@ import { DropdownDirective } from './dropdown.directive';
     ProductDetailComponent,
     ShoppingListComponent,
     ShoppingListAddComponent,
-    DropdownDirective
+    DropdownDirective,
+    ProductEditComponent,
+    ProductStartComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    routing
   ],
   providers: [ProductService, ShoppingCartService],
   bootstrap: [AppComponent]
