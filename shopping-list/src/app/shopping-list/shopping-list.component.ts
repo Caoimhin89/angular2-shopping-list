@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Inclusion } from '../shared/inclusion';
+import { Product } from '../products/product';
+import { ShoppingCartService } from './shopping-cart.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -7,11 +8,12 @@ import { Inclusion } from '../shared/inclusion';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit {
-  items: Inclusion[] = [];
+  items: Map<Product, number> = null;
 
-  constructor() { }
+  constructor(private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit() {
+    this.items = this.shoppingCartService.getItems();
   }
 
 }
