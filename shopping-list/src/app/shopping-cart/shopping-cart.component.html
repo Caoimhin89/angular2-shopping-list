@@ -2,7 +2,15 @@
   <div class="col-xs-10">
     <hr>
     <ul class="list-group">
-      <a class="list-group-item" style="..." *ngFor="let key of items.keys()">{{key.name}} : {{items.get(key)}}</a>
+      <a class="list-group-item" style="..." *ngFor="let product of items.keys()" (click)="onSelectItem(items.get(product))">
+        {{product.name}} : {{items.get(product)}}
+        <button class="btn btn-sm btn-warning" (click)="removeItem(product)">Remove One</button>
+        <button class="btn btn-sm btn-danger" (click)="removeAll(product)">Remove All</button>
+      </a>
     </ul>
+    <div>
+      <button class="btn btn-lg btn-success">Checkout</button>
+      <button class="btn btn-lg btn-danger" (click)="clearCart()">Empty Cart</button>
+    </div>
   </div>
 </div>

@@ -1,38 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Inclusion } from '../shared/inclusion';
+import { ShoppingList } from './shopping-list';
+import { Product } from '../products/product';
+import { Purchase } from '../shared/purchase';
 
 @Injectable()
 export class ShoppingListService {
-  private items: Map<string, number> = new Map;
+  private shoppingLists: Map<string, ShoppingList> = new Map();
 
   constructor() { }
 
-  getItems() {
-    return this.items;
+  getShoppingLists() {
+    return this.shoppingLists;
   }
 
-  addItem(item: Inclusion) {
-    if(this.isAlreadyInCart(item.name)) {
-      this.items.set(item.name, this.getCurrentQuantity(item.name) + item.quantity);
-    } else {
-      this.items.set(item.name, item.quantity);
+  getItemsFromList(listId: string) : Purchase[] {
+    return this.shoppingLists.get(listId).getPurchasesArray();
+  }
+
+  addItemToList(listId: string, item: Product, quantity: number) {
+    if(this.isNewList(listId)) {
+      this.createNewShoppingList(listId);
     }
-    console.log("Item added to shopping-list! : " + item.name + " : " + item.quantity);
+    if(this.isNotEmptyList(listId)) {
+      if(this.isAlreadyInList(listId, item)) {
+        this.shoppingLists.get(listId).getPurchases().get(item.name).addMultipleUnits(quantity);
+      } else {
+        this.shoppingLists.get(listId).getPurchases().set(item.name, new Purchase(item, quantity));
+      }
+      console.log("Item added to shopping-list! : " + item.name + " : " + quantity);
+    } else {
+      this.shoppingLists.get(listId).addNewPurchase(new Purchase(item, quantity));
+    }
   }
 
 
   // Sub-Routines
 
-  isAlreadyInCart(item: string) : boolean {
-    if(this.items.has(item)) {
-      return true;
-    } else {
-      return false;
-    }
+  isNewList(listId: string): boolean {
+    return this.shoppingLists.has(listId);
   }
 
-  getCurrentQuantity(item: string) : number {
-    return this.items.get(item);
+  createNewShoppingList(listId: string) {
+    let newList: ShoppingList = new ShoppingList(listId, new Map());
+    this.shoppingLists.set(listId, newList);
+  }
+
+  isAlreadyInList(listId: string, item: Product) : boolean {
+    for(let purchase of this.shoppingLists.get(listId).getPurchasesArray()) {
+      if(purchase.getProduct() === item) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isNotEmptyList(listId: string): boolean {
+    return this.shoppingLists.get(listId) != undefined;
   }
 
 }

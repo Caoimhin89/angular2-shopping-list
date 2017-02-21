@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Inclusion } from '../shared/inclusion';
+import { Product } from '../products/product';
+import { Purchase } from '../shared/purchase';
 import { ShoppingListService } from './shopping-list.service';
 
 @Component({
@@ -9,20 +10,21 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class ShoppingListAddComponent implements OnInit {
   isAdd = true;
-  item: Inclusion;
+  item: Purchase;
 
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit() {
   }
 
-  onSubmit(purchase: Inclusion) {
+  onSubmit(name: string, quantity: number, list: string) {
     if(!this.isAdd) {
       //EDIT
     } {
-      this.item = new Inclusion(purchase.name, purchase.quantity);
-      this.shoppingListService.addItem(this.item);
-      console.log("Purchase name: " + this.item.name + " | " + "Quantity: " + this.item.quantity);
+      let product = new Product(name, '', '', []);
+      this.item = new Purchase(product, quantity);
+      this.shoppingListService.addItemToList(list, product, quantity);
+      console.log("Purchase name: " + name + " | " + "Quantity: " + quantity + " | " + "List: " + list);
     }
   }
 

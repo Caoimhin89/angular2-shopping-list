@@ -2,8 +2,8 @@
   <div class="col-xs-10">
     <app-shopping-list-add></app-shopping-list-add>
     <hr>
-    <ul class="list-group">
-      <a class="list-group-item" style="..." *ngFor="let key of items.keys()">{{key}} : {{items.get(key)}}</a>
+    <ul class="list-group" *ngIf="items != undefined">
+      <a class="list-group-item" style="..." *ngFor="let key of items.keys()">{{key}} : {{items.get(key).getName()}}</a>
     </ul>
   </div>
 </div>

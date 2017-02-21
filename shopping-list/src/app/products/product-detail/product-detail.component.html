@@ -7,10 +7,25 @@
   <div class="col-xs-12">
     <h1>{{selectedProduct?.name}}</h1>
   </div>
-  <div class="col-xs-12">
+  <div *ngIf="!editList" class="col-xs-12">
     <button class="btn btn-success" (click)="onAddToCart()">Add to Cart</button>
+    <button class="btn btn-secondary" (click)="onSaveToList()">Save For Later</button>
     <button class="btn btn-primary" (click)="onEdit()">Edit</button>
     <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+  </div>
+  <div *ngIf="editList">
+    <select (change)="onSelect($event.target.value)">
+      <option>Select Shopping List</option>
+      <option *ngFor="let list of lists?.keys()" value="{{list}}">{{list}}</option>
+    </select>
+    <button class="btn btn-sm btn-success" (click)="onAddToList()" [disabled]="selectedList === undefined">Add</button>
+    <button class="btn btn-primary" (click)="newList = true">Create New List</button>
+    <div *ngIf="newList">
+      <label>List Name</label>
+      <input type="text" #listName>
+      <button class="btn btn-success" (click)="onCreateList(listName.value)">Create</button>
+      <button class="btn btn-danger" (click)="newList = false">Cancel</button>
+    </div>
   </div>
 </div>
 <hr>

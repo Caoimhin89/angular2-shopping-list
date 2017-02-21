@@ -11,13 +11,25 @@ export class ShoppingCartService {
     return this.items;
   }
 
-  addItems(item: Product) {
+  addItem(item: Product) {
     if(this.isAlreadyInCart(item)) {
       this.items.set(item, this.getCurrentQuantity(item) + 1);
     } else {
       this.items.set(item, 1);
     }
     console.log("Item added! : " + item.name);
+  }
+
+  removeSingleUnit(item: Product) {
+    this.items.set(item, this.getCurrentQuantity(item) - 1);
+  }
+
+  removeAllUnits(item: Product) {
+    this.items.delete(item);
+  }
+
+  clearCart() {
+    this.items.clear();
   }
 
 
