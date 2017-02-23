@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormBuilder } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { ProductService } from './products/product.service';
 import { ShoppingCartService } from './shopping-cart/shopping-cart.service';
@@ -40,9 +41,10 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    ReactiveFormsModule
   ],
-  providers: [ProductService, ShoppingCartService, ShoppingListService],
+  providers: [ProductService, ShoppingCartService, ShoppingListService, FormBuilder],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
