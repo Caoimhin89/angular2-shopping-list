@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+
 import { Product } from './product';
 import { Inclusion } from '../shared/inclusion';
 
@@ -21,9 +23,9 @@ export class ProductService {
       new Inclusion('Power Adapter', 1),
       new Inclusion('USB cable', 1)
     ])
-  ]
+  ];
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   getProducts() {
     return this.products;
@@ -35,5 +37,17 @@ export class ProductService {
 
   deleteProduct(product: Product) {
     this.products.splice(this.products.indexOf(product), 1);
+  }
+
+  addProduct() {
+    const body = JSON.stringify(this.products);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', body, {headers: headers});
+  }
+
+  fetchProductData() {
+
   }
 }
