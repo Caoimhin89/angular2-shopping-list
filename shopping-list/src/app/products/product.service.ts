@@ -41,13 +41,13 @@ export class ProductService {
 
   addAllProducts() {
     const requestParams = this.createHttpParams(this.products);
-    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
+    return this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
   }
 
   addProduct(product: Product) {
     const requestParams = this.createHttpParams(product);
     this.products.push(product);
-    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
+    return this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
   }
 
   editProduct(originalProduct: Product, updatedProduct: Product) {

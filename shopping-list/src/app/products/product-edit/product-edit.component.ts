@@ -46,7 +46,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     const newProduct = this.productForm.value;
     if(this.isNew) {
-      this.productService.addProduct(newProduct);
+      this.productService.addProduct(newProduct).subscribe(
+        data => console.log(data),
+        error => console.log(error)
+      );
     } else {
       this.productService.editProduct(this.product, newProduct);
     }
