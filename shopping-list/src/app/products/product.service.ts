@@ -39,15 +39,32 @@ export class ProductService {
     this.products.splice(this.products.indexOf(product), 1);
   }
 
-  addProduct() {
-    const body = JSON.stringify(this.products);
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', body, {headers: headers});
+  addAllProducts() {
+    const requestParams = this.createHttpParams(this.products);
+    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
+  }
+
+  addProduct(product: Product) {
+    const requestParams = this.createHttpParams(product);
+    this.products.push(product);
+    this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
+  }
+
+  editProduct(originalProduct: Product, updatedProduct: Product) {
+    this.products[this.products.indexOf(originalProduct)] = updatedProduct;
   }
 
   fetchProductData() {
 
+  }
+
+  //Sub-Routines
+
+  createHttpParams(resourceToSend: any) {
+    const body = JSON.stringify(resourceToSend);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    return {body: body, headers: headers};
   }
 }

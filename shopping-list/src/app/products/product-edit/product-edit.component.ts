@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -20,7 +21,8 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private productService: ProductService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(
@@ -40,6 +42,42 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   private initForm() {
     !this.isNew ? this.initExistingProductForm() : this.initNewProductForm();
   }
+
+  onSubmit() {
+    const newProduct = this.productForm.value;
+    if(this.isNew) {
+      this.productService.addProduct(newProduct);
+    } else {
+      this.productService.editProduct(this.product, newProduct);
+    }
+    this.navigateBack();
+  }
+
+  onCancel() {
+    this.navigateBack();
+  }
+
+  onAddItem(name: string, quantity: string) {
+    (<FormArray>this.productForm.controls['inclusions']).push(
+      new FormGroup({
+        name: new FormControl(name, Validators.required),
+        amount: new FormControl(quantity, [
+          Validators.required,
+          Validators.pattern('\\d+')
+        ])
+      })
+    );
+  }
+
+  onRemoveItem(index: number) {
+    (<FormArray>this.productForm.controls['inclusions']).removeAt(index);
+  }
+
+  navigateBack() {
+    this.router.navigate(['../']);
+  }
+
+
 
   // Sub-Routines
 
