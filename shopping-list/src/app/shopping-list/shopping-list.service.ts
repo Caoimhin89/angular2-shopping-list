@@ -13,24 +13,13 @@ export class ShoppingListService {
     return this.shoppingLists;
   }
 
-  getItemsFromList(listId: string) : Purchase[] {
-    return this.shoppingLists.get(listId).getPurchasesArray();
+  getItemsFromList(listId: string) : Map<string, Purchase> {
+    return this.shoppingLists.get(listId).getPurchases();
   }
 
   addItemToList(listId: string, item: Product, quantity: number) {
-    if(this.isNewList(listId)) {
-      this.createNewShoppingList(listId);
-    }
-    if(this.isNotEmptyList(listId)) {
-      if(this.isAlreadyInList(listId, item)) {
-        this.shoppingLists.get(listId).getPurchases().get(item.name).addMultipleUnits(quantity);
-      } else {
-        this.shoppingLists.get(listId).getPurchases().set(item.name, new Purchase(item, quantity));
-      }
-      console.log("Item added to shopping-list! : " + item.name + " : " + quantity);
-    } else {
-      this.shoppingLists.get(listId).addNewPurchase(new Purchase(item, quantity));
-    }
+    this.createListIfNew(listId);
+    this.putItemIntoList(listId, item, quantity);
   }
 
 
@@ -46,16 +35,41 @@ export class ShoppingListService {
   }
 
   isAlreadyInList(listId: string, item: Product) : boolean {
-    for(let purchase of this.shoppingLists.get(listId).getPurchasesArray()) {
-      if(purchase.getProduct() === item) {
-        return true;
-      }
-    }
-    return false;
+    let result: boolean;
+    this.shoppingLists.get(listId).getPurchases().has(item.name) ? result = true : result = false;
+    return result;
   }
 
   isNotEmptyList(listId: string): boolean {
     return this.shoppingLists.get(listId) != undefined;
+  }
+
+  addAdditionalUnitsToListItem(listId: string, item: Product) {
+    this.shoppingLists.get(listId).getPurchases().get(item.name).addOneUnit();
+    console.log("Additional Units Added!");
+  }
+
+  addNewPurchaseToList(listId: string, item: Product, quantity: number) {
+    this.shoppingLists.get(listId).addNewPurchase(new Purchase(item, quantity));
+    console.log("New Purchase Added!");
+  }
+
+  createListIfNew(listId: string) : void {
+    if(this.isNewList(listId)) {
+      return;
+    }
+    this.createNewShoppingList(listId);
+    console.log("New List Created: " + listId);
+  }
+
+  putItemIntoList(listId: string, item: Product, quantity: number) : void{
+    if(this.isNotEmptyList(listId)) {
+      this.isAlreadyInList(listId, item) ?
+        this.addAdditionalUnitsToListItem(listId, item) :
+        this.addNewPurchaseToList(listId, item, quantity);
+    } else {
+      this.addNewPurchaseToList(listId, item, quantity);
+    }
   }
 
 }

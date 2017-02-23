@@ -22,6 +22,7 @@ export class ShoppingList {
   }
 
   addNewPurchase(purchase: Purchase) {
+    console.log("Purchase ID: " + purchase.getId());
     this.purchases.set(purchase.getId(), purchase);
   }
 }

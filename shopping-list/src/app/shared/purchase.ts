@@ -22,7 +22,4 @@ export class Purchase {
     this.quantity++;
   }
 
-  addMultipleUnits(additionalUnits: number) {
-    this.quantity += additionalUnits;
-  }
 }

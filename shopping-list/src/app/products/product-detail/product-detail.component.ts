@@ -45,13 +45,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.shoppingCartService.addItem(this.selectedProduct);
   }
 
-  onSaveToList() {
+  onSaveForLater() {
     this.lists = this.shoppingListService.getShoppingLists();
     this.editList = true;
   }
 
   onAddToList() {
     this.shoppingListService.addItemToList(this.selectedList, this.selectedProduct, 1);
+    console.log("Selected List: " + this.selectedList);
+    console.log("Selected Product: " + this.selectedProduct.name);
     this.editList = false;
   }
 

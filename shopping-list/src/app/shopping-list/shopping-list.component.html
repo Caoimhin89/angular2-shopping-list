@@ -1,9 +1,15 @@
 <div class="row">
-  <div class="col-xs-10">
-    <app-shopping-list-add></app-shopping-list-add>
-    <hr>
-    <ul class="list-group" *ngIf="items != undefined">
-      <a class="list-group-item" style="..." *ngFor="let key of items.keys()">{{key}} : {{items.get(key).getName()}}</a>
+  <div class="col-md-6">
+    <ul class="list-group" *ngIf="lists != undefined">
+      <a class="list-group-item" style="..." *ngFor="let key of lists.keys()">
+        {{key}}
+        <button class="btn btn-xs btn-primary pull-right" (click)="onSelectList(key)">View List</button>
+      </a>
+    </ul>
+  </div>
+  <div *ngIf="listSelected" class="col-md-6">
+    <ul class="list-group">
+      <li *ngFor="let item of items.keys()">{{item}} : x{{items.get(item).getQuantity()}}</li>
     </ul>
   </div>
 </div>
