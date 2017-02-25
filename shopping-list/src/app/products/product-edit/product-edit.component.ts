@@ -51,7 +51,10 @@ export class ProductEditComponent implements OnInit, OnDestroy {
         error => console.log(error)
       );
     } else {
-      this.productService.editProduct(this.product, newProduct);
+      this.productService.editProduct(this.product, newProduct).subscribe(
+        data => console.log(data),
+        error => console.log(error)
+      );
     }
     this.navigateBack();
   }
