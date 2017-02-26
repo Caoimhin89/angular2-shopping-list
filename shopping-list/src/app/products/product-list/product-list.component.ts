@@ -13,14 +13,11 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
+    this.productService.fetchProducts();
     this.products = this.productService.getProducts();
     this.productService.productsChanged.subscribe(
       (products: Product[]) => this.products = products
     );
-  }
-
-  onSelected() {
-
   }
 
 }

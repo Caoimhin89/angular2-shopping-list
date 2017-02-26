@@ -10,7 +10,7 @@ export class ProductsComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.productService.fetchProducts();
+
   }
 
 }

@@ -3,6 +3,7 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/Rx';
 
 import { Product } from './product';
+import { Inclusion } from '../shared/inclusion';
 
 @Injectable()
 export class ProductService {
@@ -11,7 +12,7 @@ export class ProductService {
 
   constructor(private http: Http) { }
 
-  getProducts() {
+  getProducts(): Product[] {
     return this.products;
   }
 
@@ -23,21 +24,19 @@ export class ProductService {
     this.products.splice(this.products.indexOf(product), 1);
   }
 
-  addAllProducts() {
-    const requestParams = this.createHttpParams(this.products);
-    return this.http.post('https://e-commerce-24d8c.firebaseio.com/products.json', requestParams.body, {headers: requestParams.headers});
-  }
-
   addProduct(product: Product) {
-    const requestParams = this.createHttpParams(product);
     this.products.push(product);
-    return this.http.post(`https://e-commerce-24d8c.firebaseio.com/products/.json`, requestParams.body, {headers: requestParams.headers});
+    return this.storeProducts();
   }
 
   editProduct(originalProduct: Product, updatedProduct: Product) {
     this.products[this.products.indexOf(originalProduct)] = updatedProduct;
-    const requestParams = this.createHttpParams(updatedProduct);
-    return this.http.post(`https://e-commerce-24d8c.firebaseio.com/products/.json`, requestParams.body, {headers: requestParams.headers});
+    return this.storeProducts();
+  }
+
+  storeProducts() {
+    const requestParams = this.createHttpParams(this.products);
+    return this.http.put('https://e-commerce-24d8c.firebaseio.com/products/.json', requestParams.body, {headers: requestParams.headers});
   }
 
   fetchProducts() {

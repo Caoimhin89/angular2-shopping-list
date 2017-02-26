@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { Inclusion } from '../../shared/inclusion';
 
 @Component({
   selector: 'app-product-edit',
@@ -28,7 +29,6 @@ export class ProductEditComponent implements OnInit, OnDestroy {
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         this.productIndex = +params['id'];
-        this.product = this.productService.getProductById(this.productIndex);
         params.hasOwnProperty('id') ? this.editExistingProduct(params) : this.createNewProduct();
         this.initForm();
       }
@@ -44,7 +44,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const newProduct = this.productForm.value;
+    const newProduct = this.convertToProduct(this.productForm.value);
     if(this.isNew) {
       this.productService.addProduct(newProduct).subscribe(
         data => console.log(data),
@@ -125,6 +125,14 @@ export class ProductEditComponent implements OnInit, OnDestroy {
       description: [productDescription, Validators.required],
       inclusions: productIncludes
     });
+  }
+
+  convertToProduct(product: any): Product {
+    let inclusions: Inclusion[] = [];
+    for(let item of product.inclusions) {
+      inclusions.push(new Inclusion(item.name, parseInt(item.amount)));
+    }
+    return new Product(product.name, product.description, product.imagePath, inclusions);
   }
 
 }
